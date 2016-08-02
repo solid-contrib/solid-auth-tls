@@ -40,7 +40,7 @@
   },
   "homepage": "https://github.com/solid/solid-auth-tls",
   "dependencies": {
-    "solid-web-client": "0.0.2"
+    "solid-web-client": "0.0.4"
   },
   "devDependencies": {
     "standard": "^5.4.1"
