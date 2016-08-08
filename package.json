@@ -1,6 +1,6 @@
 {
   "name": "solid-auth-tls",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "engines": {
     "node": "^6.0"
   },
@@ -39,8 +39,7 @@
     "url": "https://github.com/solid/solid-auth-tls/issues"
   },
   "homepage": "https://github.com/solid/solid-auth-tls",
-  "dependencies": {
-  },
+  "dependencies": {},
   "devDependencies": {
     "solid-web-client": "0.0.6",
     "standard": "^5.4.1"
