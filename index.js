@@ -38,7 +38,7 @@ module.exports = ClientAuthTLS
 var defaultConfig = require('./config-default')
 
 function ClientAuthTLS (webClient, config) {
-  this.webClient = webClient || require('solid-web-client')()
+  this.webClient = webClient
   this.config = config || defaultConfig
 }
 
