@@ -41,8 +41,8 @@
   "homepage": "https://github.com/solid/solid-auth-tls",
   "dependencies": {},
   "devDependencies": {
-    "solid-web-client": "0.0.6",
-    "standard": "^5.4.1"
+    "solid-web-client": "0.1.0",
+    "standard": "^8.6.0"
   },
   "standard": {
     "globals": []
