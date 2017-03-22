@@ -14,7 +14,8 @@
     "prepublish": "npm run test",
     "standard": "standard lib/*.js test/*.js",
     "pretest": "npm run standard",
-    "test": "mocha",
+    "test": "nyc --reporter=html mocha",
+    "coverage:coveralls": "nyc report --reporter=text-lcov | coveralls",
     "preversion": "npm test",
     "postversion": "git push --follow-tags"
   },
@@ -47,7 +48,9 @@
   "dependencies": {},
   "devDependencies": {
     "chai": "^3.5.0",
+    "coveralls": "^2.12.0",
     "mocha": "^3.2.0",
+    "nyc": "^10.1.2",
     "proxyquire": "^1.7.11",
     "sinon": "^2.1.0",
     "sinon-chai": "^2.9.0",
