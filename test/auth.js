@@ -132,6 +132,26 @@ describe('TLS Client Authentication', () => {
             expect(user).to.be.null
           })
       })
+
+      it('respects the hostname, port, and path when sending the request', () => {
+        const requestStub = sinon.stub()
+          .callsArgWith(1, { headers: {} })
+          .returns({
+            on: sinon.stub(),
+            end: sinon.stub()
+          })
+
+        const login = proxyquire('../lib/auth', { https: { request: requestStub } }).login
+
+        return login({ authEndpoint: 'https://localhost:8443/', key: keyFilename, cert: certFilename })
+          .then(() => {
+            expect(requestStub).to.have.been.calledWithMatch({
+              hostname: 'localhost',
+              port: '8443',
+              path: '/'
+            })
+          })
+      })
     })
   })
 
