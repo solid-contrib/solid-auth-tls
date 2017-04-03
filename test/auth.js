@@ -7,7 +7,7 @@ const proxyquire = require('proxyquire')
 const sinon = require('sinon')
 const sinonChai = require('sinon-chai')
 
-const auth = require('../lib/auth')
+const auth = require('../src/auth')
 
 chai.use(sinonChai)
 const expect = chai.expect
@@ -22,13 +22,13 @@ describe('TLS Client Authentication', () => {
   describe('login', () => {
     describe('in a node environment', () => {
       it('detects the node environment and requires TLS client credentials', () => {
-        const login = require('../lib/auth').login
+        const login = require('../src/auth').login
         expect(login).to.throw(Error, /Must provide TLS key and cert/)
       })
 
       it('rejects if the key or buffer cannot be found', () => {
         const requestStub = sinon.stub()
-        const login = proxyquire('../lib/auth', { https: { request: requestStub } }).login
+        const login = proxyquire('../src/auth', { https: { request: requestStub } }).login
         return login({ key: './path/does/not/exist', cert: certFilename })
           .catch(err => expect(err.code).to.equal('ENOENT'))
       })
@@ -40,7 +40,7 @@ describe('TLS Client Authentication', () => {
             end: sinon.stub()
           })
 
-        const login = proxyquire('../lib/auth', { https: { request: requestStub } }).login
+        const login = proxyquire('../src/auth', { https: { request: requestStub } }).login
 
         return login({ key: keyFilename, cert: certFilename })
           .catch(err => expect(err.message).to.equal('foo'))
@@ -54,7 +54,7 @@ describe('TLS Client Authentication', () => {
             end: sinon.stub()
           })
 
-        const login = proxyquire('../lib/auth', { https: { request: requestStub } }).login
+        const login = proxyquire('../src/auth', { https: { request: requestStub } }).login
 
         return login({ authEndpoint: 'https://localhost:8443/', key: keyFilename, cert: certFilename })
           .then(() => {
@@ -76,7 +76,7 @@ describe('TLS Client Authentication', () => {
             end: sinon.stub()
           })
 
-        const login = proxyquire('../lib/auth', { https: { request: requestStub } }).login
+        const login = proxyquire('../src/auth', { https: { request: requestStub } }).login
 
         return login({ key: keyFilename, cert: certFilename })
           .then(w => {
@@ -100,7 +100,7 @@ describe('TLS Client Authentication', () => {
             end: sinon.stub()
           })
 
-        const login = proxyquire('../lib/auth', { https: { request: requestStub } }).login
+        const login = proxyquire('../src/auth', { https: { request: requestStub } }).login
 
         return login({ key: keyFilename, cert: certFilename })
           .then(user => {
@@ -124,7 +124,7 @@ describe('TLS Client Authentication', () => {
             end: sinon.stub()
           })
 
-        const login = proxyquire('../lib/auth', { https: { request: requestStub } }).login
+        const login = proxyquire('../src/auth', { https: { request: requestStub } }).login
 
         return login({ key: keyFilename, cert: certFilename })
           .then(user => {
@@ -141,7 +141,7 @@ describe('TLS Client Authentication', () => {
             end: sinon.stub()
           })
 
-        const login = proxyquire('../lib/auth', { https: { request: requestStub } }).login
+        const login = proxyquire('../src/auth', { https: { request: requestStub } }).login
 
         return login({ authEndpoint: 'https://localhost:8443/', key: keyFilename, cert: certFilename })
           .then(() => {

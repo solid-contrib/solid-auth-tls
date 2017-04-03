@@ -7,12 +7,15 @@
   "description": "Authentication library for Solid browser-based clients",
   "main": "./lib/index.js",
   "files": [
-    "lib"
+    "lib",
+    "dist"
   ],
   "scripts": {
-    "build": "npm run test",
-    "prepublish": "npm run test",
-    "standard": "standard lib/*.js test/*.js",
+    "build:lib": "babel src -d lib",
+    "build:umd": "webpack",
+    "build": "npm run build:lib && npm run build:umd",
+    "prepublish": "npm run test && npm run build",
+    "standard": "standard src/*.js test/*.js",
     "pretest": "npm run standard",
     "test": "nyc --reporter=html mocha",
     "coverage:coveralls": "nyc report --reporter=text-lcov | coveralls",
@@ -47,6 +50,10 @@
   "homepage": "https://github.com/solid/solid-auth-tls",
   "dependencies": {},
   "devDependencies": {
+    "babel-cli": "^6.24.0",
+    "babel-core": "^6.24.0",
+    "babel-loader": "^6.4.1",
+    "babel-preset-env": "^1.3.2",
     "chai": "^3.5.0",
     "coveralls": "^2.12.0",
     "mocha": "^3.2.0",
@@ -55,6 +62,7 @@
     "sinon": "^2.1.0",
     "sinon-chai": "^2.9.0",
     "solid-web-client": "0.0.6",
-    "standard": "^5.4.1"
+    "standard": "^5.4.1",
+    "webpack": "^2.3.3"
   }
 }
