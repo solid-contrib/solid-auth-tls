@@ -3,14 +3,18 @@
 var defaultConfig = require('./config-default')
 
 /**
- * Returns whether or not the current JS engine is in a browser environment. The
- * environment is assumed to be Node.js if this returns false. Heuristically
- * just looks for 'window' and 'XMLHttpRequest'.
- * @returns {Boolean} true if the environment is a browser, false otherwise
+ * Note:
+ *
+ * global.IS_BROWSER is a global made available by a webpack plugin.
+ * If you're using this library in the browser you must include the folowing
+ * configuration in your webpack config (or equivalent):
+ *   module.exports = {
+ *     ...,
+ *     plugins: [
+ *       new webpack.DefinePlugin({ global.IS_BROWSER: true }),
+ *     ]
+ *   }
  */
-function isBrowser () {
-  return typeof window !== 'undefined' && typeof XMLHttpRequest !== 'undefined'
-}
 
 /**
  * Enumerates the two main types of authentication endpoints.
@@ -54,7 +58,7 @@ const currentUser = login
  * client cert is recognized, otherwise null.
  */
 function loginTo (endpoint, config) {
-  return isBrowser()
+  return global.IS_BROWSER
     ? loginFromBrowser(endpoint, config)
     : loginFromNode(endpoint, config)
 }
@@ -115,9 +119,13 @@ function loginFromNode (endpoint, config) {
       break
   }
 
-  const fs = require('fs')
-  const https = require('https')
-  const url = require('url')
+  let fs, https, url
+
+  if (!global.IS_BROWSER) {
+    fs = require('fs')
+    https = require('https')
+    url = require('url')
+  }
 
   return Promise.all([config.key, config.cert].map(filename =>
     new Promise((resolve, reject) => {
