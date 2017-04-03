@@ -5,13 +5,13 @@ var defaultConfig = require('./config-default')
 /**
  * Note:
  *
- * IS_BROWSER is a global made available by a webpack plugin.
+ * global.IS_BROWSER is a global made available by a webpack plugin.
  * If you're using this library in the browser you must include the folowing
  * configuration in your webpack config (or equivalent):
  *   module.exports = {
  *     ...,
  *     plugins: [
- *       new webpack.DefinePlugin({ IS_BROWSER: true }),
+ *       new webpack.DefinePlugin({ global.IS_BROWSER: true }),
  *     ]
  *   }
  */
